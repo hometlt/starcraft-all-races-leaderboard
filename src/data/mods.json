@@ -1,0 +1,12 @@
+{
+  "mods": [
+    {
+      "id": "scion",
+      "name": "Scion Races"
+    },
+    {
+      "id": "arc",
+      "name": "All Races"
+    }
+  ]
+}

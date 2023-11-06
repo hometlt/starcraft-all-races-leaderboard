@@ -1,0 +1,78 @@
+<div class="container" *ngIf="scdata.modsData">
+
+  <table *ngIf="scdata.leaderboardFilteredData" class="ratings">
+    <thead>
+      <tr  class="container">
+        <th colspan="5">
+          <a title="EU" [routerLink]="['/',scdata.modID,'eu']" class="race-button" [class.selected]="scdata.regionID === 'eu'"><span>EU</span></a>
+          <a title="NA" [routerLink]="['/',scdata.modID,'na']" class="race-button" [class.selected]="scdata.regionID === 'na'"><span>NA</span></a>
+          <a title="KR" [routerLink]="['/',scdata.modID,'kr']" class="race-button" [class.selected]="scdata.regionID === 'kr'"><span>KR</span></a>
+        </th>
+      </tr>
+
+      <tr >
+        <th>#</th>
+        <th class="name-th">Name</th>
+        <th>WinRate</th>
+        <th>Rating</th>
+        <th>Games</th>
+<!--        <th>Active</th>-->
+      </tr>
+    </thead>
+    <tbody>
+
+      <ng-container *ngFor="let row of scdata.leaderboardFilteredData; index as i">
+        <tr class="record"  [routerLink]="['/',scdata.modID,scdata.regionID,row.id]">
+          <td class="place">{{i + 1}}</td>
+          <td class="name">{{row.name}}</td>
+          <td>{{row.rate}}%</td>
+          <td>{{row.mmr}}</td>
+          <td >{{row.games.length}}</td>
+<!--          <td>{{row.time}} days ago</td>-->
+        </tr>
+        <!--      <tr><td>{{row.g |json}}</td></tr>-->
+      </ng-container>
+    </tbody>
+  </table>
+
+  <ng-container *ngIf="scdata.playerData as p">
+
+    <div class="popup-bg" [routerLink]="['/',scdata.modID,scdata.regionID]"></div>
+    <div class="popup">
+
+      <table class="ratings">
+        <thead>
+
+        <tr >
+          <th colspan="5">Player : {{p.name}}</th>
+        </tr>
+        <tr >
+          <th>Date</th>
+          <th></th>
+          <th>MMR</th>
+          <th class="align-right">Opponent</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <ng-container *ngFor="let game of p.games; index as i">
+          <tr >
+            <td>{{game.d}}</td>
+            <td><span class="mmr">{{game.ppmmr}}</span></td>
+            <td class="result">
+              {{game.m}}
+              <span class="win" *ngIf="game.r">▲</span>
+              <span class="loss" *ngIf="!game.r">▼</span>
+            </td>
+            <td class="align-right">{{game.v}} <span class="mmr">{{game.vpmmr}}</span></td>
+
+
+          </tr>
+        </ng-container>
+        </tbody>
+      </table>
+    </div>
+
+  </ng-container>
+
+</div>

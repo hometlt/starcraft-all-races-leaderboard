@@ -1,0 +1,89 @@
+
+@font-face {
+  font-family: "Michroma";
+  src: url(./assets/fonts/Michroma-Regular.ttf)
+}
+
+
+
+
+body{
+  font-family: "Michroma",Open Sans,Helvetica,Arial,sans-serif;
+  margin: 0;
+  background-size: cover;
+  background-color: #002650;
+  background-image: url(./assets/ui/bg.jpg);
+  background-position: top;
+}
+
+html, body{
+  width: 100%;
+  height: 100%;
+}
+
+*{
+  box-sizing: border-box;
+}
+
+.scrollbar
+{
+  margin-left: 22px;
+  float: left;
+  height: 300px;
+  width: 65px;
+  background: rgba(87, 95, 109, 0.14);
+  overflow-y: scroll;
+  margin-bottom: 25px;
+}
+
+.force-overflow
+{
+  min-height: 450px;
+}
+
+#wrapper
+{
+  text-align: center;
+  margin: auto;
+}
+
+/*
+ *  STYLE 7
+ */
+
+::-webkit-scrollbar-track
+{
+}
+
+::-webkit-scrollbar-corner { background: transparent }
+
+
+::-webkit-scrollbar
+{
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-thumb
+{
+  border-radius: 10px;
+  background-color: #003f7f;
+}
+
+.sc-tooltip {
+  border: 1px solid #2765a4;
+  text-align: left !important;
+  font-size: 12px;
+  width: 350px !important;
+  min-width: 350px !important;
+  ul{
+    flex-direction: column;
+    margin: 0;
+    list-style: disc;
+    padding: 0 14px;
+    text-align: left !important;
+    li{
+      text-align: left !important;
+    }
+  }
+}
