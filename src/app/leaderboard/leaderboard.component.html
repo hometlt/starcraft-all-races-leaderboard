@@ -51,6 +51,7 @@
           <th></th>
           <th>MMR</th>
           <th class="align-right">Opponent</th>
+          <th>MMR</th>
         </tr>
         </thead>
         <tbody>
@@ -59,12 +60,17 @@
           <tr >
             <td>{{game.d}}</td>
             <td><span class="mmr">{{game.ppmmr}}</span></td>
-            <td class="result">
-              {{game.m}}
-              <span class="win" *ngIf="game.r">▲</span>
-              <span class="loss" *ngIf="!game.r">▼</span>
+            <td class="result" [ngClass]="{win: game.r, loss: !game.r}">
+              {{game.m > 0  ? "+" : ""}}{{game.m}}
+              <span *ngIf="game.r">▲</span>
+              <span *ngIf="!game.r">▼</span>
             </td>
             <td class="align-right">{{game.v}} <span class="mmr">{{game.vpmmr}}</span></td>
+            <td class="result" [ngClass]="{win: !game.r, loss: game.r}">
+              {{game.vm > 0  ? "+" : ""}}{{game.vm}}
+              <span *ngIf="!game.r">▲</span>
+              <span *ngIf="game.r">▼</span>
+            </td>
 
 
           </tr>

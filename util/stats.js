@@ -315,18 +315,43 @@ class Lobbies {
               let scoreA = players[A].rating, scoreB = players[B].rating;
               let expectedScoreA =  1/(1+Math.pow(10,((scoreB-scoreA)/400)));
               let actualScoreA = isWinner ? 1: 0
-              let newScoreA = scoreA + k * (actualScoreA - expectedScoreA)
-              let diffA= newScoreA - scoreA
-              players[A].games.unshift({d: date,
-                  vid: B,
-                  vpmmr: Math.round(previousRating[B]),
-                  ppmmr: Math.round(previousRating[A]),
-                  v: profiles.list[B].name, r: isWinner ? 1: 0, m: Math.round(diffA * mmrScale )})
-              players[A].rating = newScoreA;
+              return scoreA + k * (actualScoreA - expectedScoreA)
             }
 
-            eloKCalculate(winner, loser, getK(winner), true)
-            eloKCalculate(loser, winner, getK(loser), false)
+
+          let oldScoreWinner = players[winner].rating
+          let oldScoreLoser = players[loser].rating
+
+          let newScoreWinner = eloKCalculate(winner, loser, getK(winner), true)
+          let newScoreLoser = eloKCalculate(loser, winner, getK(loser), false)
+
+          let winnerMMRChange = Math.round((newScoreWinner - oldScoreWinner) * mmrScale )
+          let loserMMRChange = Math.round((newScoreLoser - oldScoreLoser)  * mmrScale )
+
+          players[winner].games.unshift({d: date,
+            ppmmr: Math.round(previousRating[winner]),
+            vpmmr: Math.round(previousRating[loser]),
+            vid: loser, v: profiles.list[loser].name,
+            r: 1,
+            m: winnerMMRChange,
+            vm: loserMMRChange,
+          })
+
+
+          players[loser].games.unshift({d: date,
+            ppmmr: Math.round(previousRating[loser]),
+            vpmmr: Math.round(previousRating[winner]),
+            vid: winner, v: profiles.list[winner].name,
+            r: 0,
+            m: loserMMRChange ,
+            vm: winnerMMRChange
+          })
+
+
+          players[winner].rating = newScoreWinner;
+          players[loser].rating = newScoreLoser;
+
+
         }
 
         let data = []
@@ -442,6 +467,7 @@ let mods = {
         kr: 122362
     }
 }
+
 for(let mod in mods) {
     for(let region in mods[mod]) {
         let lobbies = new Lobbies(profiles,`${mod}-${region}`, region, mods[mod][region])
